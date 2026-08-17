@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#2a0910" />
+  <meta name="description" content="Morio â€” a modern Bengaluru-based saree and lifestyle label." />
+  <title>Morio â€” Gracefully Crafted</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Italiana&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="announcement">
+    <span>Bengaluru-born</span><span class="announcement-dot">âœ¦</span><span>Complimentary shipping above â‚¹4,999</span><span class="announcement-dot">âœ¦</span><span>Secure checkout</span>
+  </div>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="Morio home">
+      <span class="brand-mark">MÅŒ</span>
+      <span class="brand-name">MORIÅŒ</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#new">New arrivals</a>
+      <a href="#collections">Collections</a>
+      <a href="#story">Our story</a>
+      <a href="#journal">Journal</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-button" id="searchToggle" aria-label="Search products" title="Search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path></svg>
+      </button>
+      <button class="icon-button" id="profileToggle" aria-label="Open customer profile" title="Profile">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4.8 21c.8-4.1 3.2-6.2 7.2-6.2s6.4 2.1 7.2 6.2"></path></svg>
+      </button>
+      <button class="icon-button bag-button" id="cartToggle" aria-label="Open shopping bag" title="Bag">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 13H6L5 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
+        <span class="count-badge" id="cartCount">0</span>
+      </button>
+      <button class="menu-button" id="menuToggle" aria-label="Open menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="search-bar" id="searchBar">
+    <label for="siteSearch">Search the collection</label>
+    <div class="search-input-wrap">
+      <input id="siteSearch" type="search" placeholder="Try â€œorganzaâ€, â€œsilkâ€ or â€œfestiveâ€" autocomplete="off" />
+      <button id="closeSearch" aria-label="Close search">Ã—</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">A modern Indian wardrobe, thoughtfully yours</p>
+        <h1>Draped in story.<br /><em>Made for now.</em></h1>
+        <p class="hero-text">Sarees, separates and keepsakes shaped by Indian craft, contemporary ease and a distinctly Bengaluru point of view.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="#new">Shop the first edit</a>
+          <a class="text-link" href="#story">Discover Morio <span>â†—</span></a>
+        </div>
+        <div class="hero-notes">
+          <div><strong>01</strong><span>Small-batch<br />collections</span></div>
+          <div><strong>02</strong><span>Made with<br />Indian textiles</span></div>
+          <div><strong>03</strong><span>Styled for<br />repeat wear</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="hero-image-frame">
+          <img src="assets/brand-story.webp" alt="Morio launch artwork with a gold saree" />
+          <div class="hero-stamp">BENGALURU<br /><span>2026</span></div>
+        </div>
+        <div class="floating-card">
+          <span class="floating-kicker">The signature edit</span>
+          <strong>Quiet luxury,<br />Indian soul.</strong>
+          <a href="#new">Explore now â†’</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-label="Brand values">
+      <div class="marquee-track">
+        <span>SAREES FOR REAL LIFE</span><b>âœ¦</b><span>TEXTILES WITH MEMORY</span><b>âœ¦</b><span>ROOTED IN BENGALURU</span><b>âœ¦</b><span>GRACEFULLY CRAFTED</span><b>âœ¦</b>
+        <span>SAREES FOR REAL LIFE</span><b>âœ¦</b><span>TEXTILES WITH MEMORY</span><b>âœ¦</b><span>ROOTED IN BENGALURU</span><b>âœ¦</b><span>GRACEFULLY CRAFTED</span><b>âœ¦</b>
+      </div>
+    </section>
+
+    <section class="section collections-section" id="collections">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow">Curated worlds</p>
+          <h2>Find your kind of beautiful.</h2>
+        </div>
+        <p>From luminous silks to effortless everyday drapes, each edit is designed to move between milestones and ordinary magic.</p>
+      </div>
+
+      <div class="collection-grid">
+        <button class="collection-card collection-card-large reveal" data-category="Silk">
+          <div class="collection-art art-silk"><span class="motif motif-one"></span><span class="motif motif-two"></span></div>
+          <div class="collection-meta"><span>01 / Heritage reimagined</span><h3>Silk Stories</h3><p>Kanjivaram and Banarasi, softened for now.</p></div>
+        </button>
+        <button class="collection-card reveal" data-category="Lightweight">
+          <div class="collection-art art-air"><span class="motif motif-three"></span></div>
+          <div class="collection-meta"><span>02 / Barely-there drapes</span><h3>Air & Light</h3><p>Organza, tissue and Chanderi.</p></div>
+        </button>
+        <button class="collection-card reveal" data-category="Everyday">
+          <div class="collection-art art-earth"><span class="motif motif-four"></span></div>
+          <div class="collection-meta"><span>03 / Everyday ease</span><h3>Soft Structure</h3><p>Linen, cotton and fluid layers.</p></div>
+        </button>
+        <button class="collection-card reveal" data-category="Festive">
+          <div class="collection-art art-night"><span class="motif motif-five"></span></div>
+          <div class="collection-meta"><span>04 / Celebration dressing</span><h3>After Dark</h3><p>Statement zari and jewel tones.</p></div>
+        </button>
+      </div>
+    </section>
+
+    <section class="section product-section" id="new">
+      <div class="section-heading product-heading reveal">
+        <div>
+          <p class="eyebrow">The first drop</p>
+          <h2>New arrivals</h2>
+        </div>
+        <div class="product-tools">
+          <div class="filter-pills" role="group" aria-label="Filter products">
+            <button class="filter-pill active" data-filter="All">All</button>
+            <button class="filter-pill" data-filter="Silk">Silk</button>
+            <button class="filter-pill" data-filter="Lightweight">Lightweight</button>
+            <button class="filter-pill" data-filter="Everyday">Everyday</button>
+            <button class="filter-pill" data-filter="Festive">Festive</button>
+          </div>
+          <select id="sortProducts" aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty-state" id="emptyState" hidden>
+        <p>No pieces found for that search.</p>
+        <button class="text-link" id="clearFilters">Clear filters â†’</button>
+      </div>
+    </section>
+
+    <section class="editorial-split" id="story">
+      <div class="editorial-image reveal">
+        <img src="assets/champagne-organza.svg" alt="Champagne-toned saree illustration" />
+        <div class="image-caption">From sketchbook to wardrobe â€” every detail is considered.</div>
+      </div>
+      <div class="editorial-copy reveal">
+        <p class="eyebrow">The Morio point of view</p>
+        <h2>Not just occasion wear.<br /><em>An heirloom mindset.</em></h2>
+        <p>Morio began with a simple thought: the most beautiful things should not wait in a cupboard for one perfect day. We create pieces that feel special, yet remain deeply wearable â€” styled your way, lived in, and passed on.</p>
+        <p>Our visual language blends old-world details, uncluttered silhouettes and the confident energy of Bengaluru.</p>
+        <div class="promise-grid">
+          <div><span>âœ¦</span><strong>Craft-led</strong><p>Textile stories take centre stage.</p></div>
+          <div><span>âœ¦</span><strong>Considered</strong><p>Small edits, intentional choices.</p></div>
+          <div><span>âœ¦</span><strong>Personal</strong><p>Thoughtful service before and after purchase.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section service-section">
+      <div class="service-card reveal">
+        <span class="service-number">01</span>
+        <div><h3>Private styling</h3><p>Book a virtual or Bengaluru appointment for draping, pairing and gifting guidance.</p></div>
+        <a href="mailto:hello@morio.in?subject=Morio%20styling%20appointment">Book a session â†—</a>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-number">02</span>
+        <div><h3>Gift beautifully</h3><p>Add a handwritten note and signature wrapping to make every order feel personal.</p></div>
+        <a href="#new">Find a gift â†—</a>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-number">03</span>
+        <div><h3>Secure payments</h3><p>UPI, cards, wallets and cash on delivery are shown in the checkout experience.</p></div>
+        <button class="link-button" id="paymentInfo">View options â†—</button>
+      </div>
+    </section>
+
+    <section class="journal section" id="journal">
+      <div class="section-heading reveal">
+        <div><p class="eyebrow">The Morio journal</p><h2>Notes on cloth, colour and culture.</h2></div>
+        <a class="text-link" href="#newsletter">Read all stories â†’</a>
+      </div>
+      <div class="journal-grid">
+        <article class="journal-card reveal">
+          <div class="journal-visual journal-one"><span>DRAPE<br />DIARIES</span></div>
+          <p class="journal-tag">Style notes Â· 5 min</p>
+          <h3>Five ways to make a classic silk feel completely your own</h3>
+          <a href="#newsletter">Read story â†’</a>
+        </article>
+        <article class="journal-card reveal">
+          <div class="journal-visual journal-two"><span>THE<br />WEAVE</span></div>
+          <p class="journal-tag">Craft Â· 7 min</p>
+          <h3>A beginnerâ€™s guide to spotting thoughtful textile details</h3>
+          <a href="#newsletter">Read story â†’</a>
+        </article>
+        <article class="journal-card reveal">
+          <div class="journal-visual journal-three"><span>BENGALURU<br />LIST</span></div>
+          <p class="journal-tag">City guide Â· 4 min</p>
+          <h3>Our favourite corners for flowers, filter coffee and slow Sundays</h3>
+          <a href="#newsletter">Read story â†’</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="newsletter" id="newsletter">
+      <div>
+        <p class="eyebrow">The inner circle</p>
+        <h2>New drops, private previews and beautiful notes.</h2>
+      </div>
+      <form id="newsletterForm">
+        <label class="sr-only" for="newsletterEmail">Email address</label>
+        <input id="newsletterEmail" type="email" placeholder="Your email address" required />
+        <button type="submit">Join Morio</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <span class="brand-mark large">MÅŒ</span>
+      <h2>MORIÅŒ</h2>
+      <p>Gracefully crafted.<br />Thoughtfully yours.</p>
+    </div>
+    <div class="footer-links">
+      <div><h3>Shop</h3><a href="#new">New arrivals</a><a href="#collections">Sarees</a><a href="#collections">Jewellery & more</a><a href="#new">Gift cards</a></div>
+      <div><h3>Care</h3><a href="#story">About Morio</a><button data-footer-action="shipping">Shipping & returns</button><button data-footer-action="care">Saree care</button><button data-footer-action="contact">Contact us</button></div>
+      <div><h3>Visit</h3><p>Bengaluru, Karnataka</p><p>Appointments by request</p><a href="mailto:hello@morio.in">hello@morio.in</a></div>
+      <div><h3>Follow</h3><a href="#top">Instagram</a><a href="#top">Pinterest</a><a href="#top">WhatsApp</a></div>
+    </div>
+    <div class="footer-bottom"><span>Â© 2026 Morio. All rights reserved.</span><span>Privacy Â· Terms Â· Accessibility</span><span>Made with care in Bengaluru.</span></div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="drawer mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="drawer-head"><span>Menu</span><button data-close="mobileMenu">Ã—</button></div>
+    <nav><a href="#new">New arrivals</a><a href="#collections">Collections</a><a href="#story">Our story</a><a href="#journal">Journal</a></nav>
+    <div class="mobile-menu-foot"><p>Bengaluru-born. Made for everywhere.</p><a href="mailto:hello@morio.in">hello@morio.in</a></div>
+  </aside>
+
+  <aside class="drawer cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-head"><div><span>Your bag</span><small id="cartItemLabel">0 items</small></div><button data-close="cartDrawer">Ã—</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-empty" id="cartEmpty">
+      <span class="empty-icon">MÅŒ</span>
+      <h3>Your bag is waiting.</h3>
+      <p>Start with a piece you will reach for again and again.</p>
+      <button class="button button-dark" data-close="cartDrawer">Explore the edit</button>
+    </div>
+    <div class="cart-footer" id="cartFooter" hidden>
+      <div class="shipping-progress"><div><span>Free shipping progress</span><strong id="shippingMessage"></strong></div><div class="progress-track"><span id="shippingProgress"></span></div></div>
+      <div class="cart-total"><span>Subtotal</span><strong id="cartSubtotal">â‚¹0</strong></div>
+      <p>Shipping and taxes calculated at checkout.</p>
+      <button class="button button-gold" id="checkoutButton">Secure checkout</button>
+      <button class="express-pay" id="quickUPI">âš¡ Quick pay with UPI</button>
+    </div>
+  </aside>
+
+  <section class="modal product-modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="productTitle">
+    <button class="modal-close" data-close="productModal" aria-label="Close product details">Ã—</button>
+    <div class="product-modal-image"><img id="productModalImage" src="" alt="" /><span id="productModalBadge"></span></div>
+    <div class="product-modal-copy">
+      <p class="eyebrow" id="productModalCategory"></p>
+      <h2 id="productTitle"></h2>
+      <div class="product-modal-price"><strong id="productModalPrice"></strong><span>Inclusive of all taxes</span></div>
+      <p id="productModalDescription"></p>
+      <div class="detail-list"><span><b>Fabric</b><i id="productModalFabric"></i></span><span><b>Length</b><i>5.5 m + blouse piece</i></span><span><b>Dispatch</b><i>3â€“5 working days</i></span></div>
+      <div class="product-option"><label>Finish</label><div><button class="option-chip active">Classic</button><button class="option-chip">Fall & pico +â‚¹450</button><button class="option-chip">Gift wrap +â‚¹250</button></div></div>
+      <div class="product-modal-actions"><button class="button button-dark" id="modalAddToCart">Add to bag</button><button class="wishlist-large" id="modalWishlist">â™¡</button></div>
+      <div class="assurance"><span>â—‡ Authenticity assured</span><span>â—‡ Secure payments</span><span>â—‡ Easy support</span></div>
+    </div>
+  </section>
+
+  <section class="modal checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <button class="modal-close" data-close="checkoutModal" aria-label="Close checkout">Ã—</button>
+    <div class="checkout-brand"><span class="brand-mark">MÅŒ</span><strong>MORIÅŒ</strong><p>Secure checkout</p></div>
+    <div class="checkout-main">
+      <div class="checkout-steps"><span class="active" data-step-indicator="1">1. Delivery</span><span data-step-indicator="2">2. Payment</span><span data-step-indicator="3">3. Confirmation</span></div>
+
+      <div class="checkout-step active" data-step="1">
+        <h2 id="checkoutTitle">Where should we send it?</h2>
+        <p class="checkout-note">India-wide delivery. Bengaluru orders can select priority dispatch.</p>
+        <form id="deliveryForm" class="form-grid">
+          <label>Full name<input name="name" required placeholder="Your full name" /></label>
+          <label>Mobile number<input name="phone" required inputmode="tel" placeholder="10-digit mobile number" /></label>
+          <label class="full">Email address<input name="email" required type="email" placeholder="you@example.com" /></label>
+          <label class="full">Address<input name="address" required placeholder="House / flat, street, locality" /></label>
+          <label>City<input name="city" required value="Bengaluru" /></label>
+          <label>PIN code<input name="pincode" required inputmode="numeric" placeholder="560001" /></label>
+          <label>State<input name="state" required value="Karnataka" /></label>
+          <label>Address type<select name="type"><option>Home</option><option>Work</option><option>Other</option></select></label>
+          <label class="checkbox-label full"><input type="checkbox" name="save" /> Save this address to my profile</label>
+        </form>
+        <button class="button button-dark checkout-next" data-next="2">Continue to payment</button>
+      </div>
+
+      <div class="checkout-step" data-step="2">
+        <h2>Choose a payment method</h2>
+        <div class="payment-options">
+          <label class="payment-option active"><input type="radio" name="payment" value="upi" checked /><span class="payment-icon">UPI</span><div><strong>UPI</strong><small>Google Pay, PhonePe, Paytm or any UPI app</small></div><b>âœ“</b></label>
+          <div class="payment-panel active" data-payment-panel="upi"><label>UPI ID<input id="upiId" placeholder="name@bank" /></label><p>For a live store, this button connects to Razorpay or Cashfree.</p></div>
+
+          <label class="payment-option"><input type="radio" name="payment" value="card" /><span class="payment-icon">â–£</span><div><strong>Credit / debit card</strong><small>Visa, Mastercard, RuPay and Amex</small></div><b>âœ“</b></label>
+          <div class="payment-panel" data-payment-panel="card"><label>Card number<input inputmode="numeric" placeholder="1234 5678 9012 3456" /></label><div class="two-col"><label>Expiry<input placeholder="MM/YY" /></label><label>CVV<input inputmode="numeric" placeholder="123" /></label></div></div>
+
+          <label class="payment-option"><input type="radio" name="payment" value="wallet" /><span class="payment-icon">â—«</span><div><strong>Wallets & net banking</strong><small>Popular wallets and 50+ Indian banks</small></div><b>âœ“</b></label>
+          <div class="payment-panel" data-payment-panel="wallet"><p>Select your wallet or bank securely after placing the order.</p></div>
+
+          <label class="payment-option"><input type="radio" name="payment" value="cod" /><span class="payment-icon">â‚¹</span><div><strong>Cash on delivery</strong><small>Available on eligible PIN codes</small></div><b>âœ“</b></label>
+          <div class="payment-panel" data-payment-panel="cod"><p>A â‚¹99 COD handling fee may apply in a live checkout.</p></div>
+        </div>
+        <label class="checkbox-label"><input type="checkbox" id="billingSame" checked /> Billing address is the same as delivery address</label>
+        <div class="checkout-nav"><button class="text-link" data-back="1">â† Back</button><button class="button button-dark" id="placeOrder">Pay & place order</button></div>
+        <p class="demo-disclaimer">Demo checkout only â€” no real payment is processed in this prototype.</p>
+      </div>
+
+      <div class="checkout-step confirmation-step" data-step="3">
+        <div class="confirmation-icon">âœ“</div>
+        <p class="eyebrow">Order confirmed</p>
+        <h2>Thank you. It is officially yours.</h2>
+        <p>We have created your order <strong id="confirmationOrderId"></strong>. A confirmation would normally be sent by email and WhatsApp.</p>
+        <div class="confirmation-summary" id="confirmationSummary"></div>
+        <button class="button button-dark" data-close="checkoutModal">Continue shopping</button>
+      </div>
+    </div>
+    <aside class="checkout-summary">
+      <h3>Your order</h3>
+      <div id="checkoutItems"></div>
+      <div class="promo-row"><input id="promoCode" placeholder="Promo code" /><button id="applyPromo">Apply</button></div>
+      <p class="promo-message" id="promoMessage"></p>
+      <div class="summary-line"><span>Subtotal</span><strong id="checkoutSubtotal">â‚¹0</strong></div>
+      <div class="summary-line"><span>Shipping</span><strong id="checkoutShipping">Free</strong></div>
+      <div class="summary-line discount-line" id="discountLine" hidden><span>Discount</span><strong id="checkoutDiscount"></strong></div>
+      <div class="summary-line grand-total"><span>Total</span><strong id="checkoutTotal">â‚¹0</strong></div>
+    </aside>
+  </section>
+
+  <section class="modal profile-modal" id="profileModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+    <button class="modal-close" data-close="profileModal" aria-label="Close profile">Ã—</button>
+    <div class="profile-visual">
+      <span class="brand-mark large">MÅŒ</span>
+      <h2>Your Morio world.</h2>
+      <p>Save favourites, track orders, manage addresses and enjoy a more personal shopping experience.</p>
+      <div><span>âœ¦ Faster checkout</span><span>âœ¦ Order history</span><span>âœ¦ Wishlist</span></div>
+    </div>
+    <div class="profile-content">
+      <div id="loginView">
+        <p class="eyebrow">Welcome</p>
+        <h2 id="profileTitle">Sign in or create your profile</h2>
+        <form id="loginForm">
+          <label>Full name<input name="name" required placeholder="Your name" /></label>
+          <label>Email address<input name="email" type="email" required placeholder="you@example.com" /></label>
+          <button class="button button-dark" type="submit">Continue</button>
+        </form>
+        <p class="profile-fineprint">This prototype stores account details only in your browser.</p>
+      </div>
+      <div id="accountView" hidden>
+        <div class="account-head"><div><p class="eyebrow">My account</p><h2 id="accountName"></h2><span id="accountEmail"></span></div><button id="logoutButton">Sign out</button></div>
+        <div class="profile-tabs"><button class="active" data-profile-tab="overview">Overview</button><button data-profile-tab="orders">Orders</button><button data-profile-tab="wishlist">Wishlist</button><button data-profile-tab="address">Address</button></div>
+        <div class="profile-tab-panel active" data-profile-panel="overview">
+          <div class="account-cards"><div><span>Orders</span><strong id="profileOrderCount">0</strong></div><div><span>Wishlist</span><strong id="profileWishlistCount">0</strong></div><div><span>Rewards</span><strong>0 pts</strong></div></div>
+          <div class="member-note"><span>MÅŒ</span><div><strong>Morio Inner Circle</strong><p>Your first purchase unlocks early access to selected drops.</p></div></div>
+        </div>
+        <div class="profile-tab-panel" data-profile-panel="orders"><div id="profileOrders"></div></div>
+        <div class="profile-tab-panel" data-profile-panel="wishlist"><div class="profile-wishlist-grid" id="profileWishlist"></div></div>
+        <div class="profile-tab-panel" data-profile-panel="address">
+          <form id="addressForm" class="form-grid"><label class="full">Address<input name="address" placeholder="House / flat, street, locality" /></label><label>City<input name="city" value="Bengaluru" /></label><label>PIN code<input name="pincode" placeholder="560001" /></label><label class="full">State<input name="state" value="Karnataka" /></label><button class="button button-dark full" type="submit">Save address</button></form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal info-modal" id="infoModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="modal-close" data-close="infoModal" aria-label="Close information">Ã—</button>
+    <p class="eyebrow" id="infoEyebrow">Morio care</p>
+    <h2 id="infoTitle">Information</h2>
+    <div id="infoBody"></div>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

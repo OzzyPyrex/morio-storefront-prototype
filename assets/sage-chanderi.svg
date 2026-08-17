@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1100" viewBox="0 0 900 1100">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0df"/><stop offset="1" stop-color="#fffaf2"/></linearGradient>
+      <linearGradient id="silk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d9074"/><stop offset="0.5" stop-color="#7d9074" stop-opacity=".9"/><stop offset="1" stop-color="#090909" stop-opacity=".2"/></linearGradient>
+      <pattern id="motif" width="58" height="58" patternUnits="userSpaceOnUse">
+        <circle cx="29" cy="29" r="4" fill="#c5a263" opacity=".72"/>
+        <path d="M29 8c8 8 8 14 0 21M29 50c-8-8-8-14 0-21M8 29c8-8 14-8 21 0M50 29c-8 8-14 8-21 0" fill="none" stroke="#c5a263" stroke-width="1.4" opacity=".38"/>
+      </pattern>
+      <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="24" flood-opacity=".22"/></filter>
+      <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="5" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .055"/></feComponentTransfer></filter>
+    </defs>
+    <rect width="900" height="1100" rx="38" fill="url(#bg)"/>
+    <circle cx="720" cy="145" r="160" fill="#c5a263" opacity=".08"/>
+    <circle cx="160" cy="940" r="210" fill="#7d9074" opacity=".08"/>
+    <g filter="url(#shadow)">
+      <path d="M190 150 C385 105 625 142 724 240 C786 301 793 392 735 472 C679 548 650 630 682 754 C707 851 655 955 548 985 C424 1020 282 955 224 852 C158 735 165 621 213 514 C254 423 260 335 190 150Z" fill="url(#silk)"/>
+      <path d="M238 169 C402 137 603 168 689 250 C738 297 741 362 702 427 C630 548 599 675 648 823 C668 881 632 936 569 957 C453 995 327 927 274 831 C215 724 221 616 262 518 C305 414 304 314 238 169Z" fill="url(#motif)" opacity=".72"/>
+      <path d="M204 176 C372 130 620 160 714 250" fill="none" stroke="#c5a263" stroke-width="22"/>
+      <path d="M224 196 C382 156 604 184 691 260" fill="none" stroke="#fff" stroke-opacity=".36" stroke-width="3"/>
+      <path d="M250 832 C354 931 503 973 638 914" fill="none" stroke="#c5a263" stroke-width="26"/>
+      <path d="M273 837 C371 915 501 948 618 901" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="3"/>
+      <path d="M344 183 C304 365 350 537 470 664 C549 748 570 843 541 948" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="26"/>
+      <path d="M497 171 C451 347 471 535 584 669" fill="none" stroke="#000" stroke-opacity=".09" stroke-width="18"/>
+    </g>
+    <g transform="translate(62 64)">
+      <text x="0" y="0" font-family="Georgia,serif" font-size="22" fill="#2a1114" letter-spacing="6">MORIÅŒ</text>
+      <text x="0" y="42" font-family="Arial,sans-serif" font-size="13" fill="#5f4a43" letter-spacing="3">BUTTI WEAVE</text>
+    </g>
+    <rect width="900" height="1100" filter="url(#grain)" opacity=".28"/>
+    </svg>
