@@ -1,0 +1,11 @@
+{
+  "name": "morio-storefront-prototype",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npm run lint && npm test",
+    "lint": "node --check app.js && node --check src/store-utils.mjs",
+    "test": "node --test"
+  }
+}

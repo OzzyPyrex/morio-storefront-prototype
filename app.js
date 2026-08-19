@@ -1,3 +1,16 @@
+import {
+  FREE_SHIPPING_THRESHOLD,
+  MAX_ITEM_QUANTITY,
+  calculateCartTotals,
+  escapeHtml,
+  isValidDelivery,
+  normalizeCart,
+  normalizeOrders,
+  normalizeProfile,
+  normalizeWishlist,
+  readStoredJson
+} from './src/store-utils.mjs';
+
 const products = [
   {
     id: 1,
@@ -95,15 +108,17 @@ const rupees = new Intl.NumberFormat('en-IN', {
   maximumFractionDigits: 0
 });
 
+const productIds = new Set(products.map(product => product.id));
+
 const state = {
   filter: 'All',
   query: '',
   sort: 'featured',
   selectedProduct: null,
-  cart: JSON.parse(localStorage.getItem('morio-cart') || '[]'),
-  wishlist: new Set(JSON.parse(localStorage.getItem('morio-wishlist') || '[]')),
-  profile: JSON.parse(localStorage.getItem('morio-profile') || 'null'),
-  orders: JSON.parse(localStorage.getItem('morio-orders') || '[]'),
+  cart: normalizeCart(readStoredJson(localStorage, 'morio-cart', []), productIds),
+  wishlist: new Set(normalizeWishlist(readStoredJson(localStorage, 'morio-wishlist', []), productIds)),
+  profile: normalizeProfile(readStoredJson(localStorage, 'morio-profile', null)),
+  orders: normalizeOrders(readStoredJson(localStorage, 'morio-orders', []), productIds),
   promo: 0
 };
 
@@ -116,13 +131,18 @@ const overlay = $('#overlay');
 const toast = $('#toast');
 let activeLayer = null;
 let toastTimer;
+let previouslyFocusedElement = null;
 
 function saveState() {
-  localStorage.setItem('morio-cart', JSON.stringify(state.cart));
-  localStorage.setItem('morio-wishlist', JSON.stringify([...state.wishlist]));
-  localStorage.setItem('morio-orders', JSON.stringify(state.orders));
-  if (state.profile) localStorage.setItem('morio-profile', JSON.stringify(state.profile));
-  else localStorage.removeItem('morio-profile');
+  try {
+    localStorage.setItem('morio-cart', JSON.stringify(state.cart));
+    localStorage.setItem('morio-wishlist', JSON.stringify([...state.wishlist]));
+    localStorage.setItem('morio-orders', JSON.stringify(state.orders));
+    if (state.profile) localStorage.setItem('morio-profile', JSON.stringify(state.profile));
+    else localStorage.removeItem('morio-profile');
+  } catch {
+    showToast('Your changes could not be saved in this browser.');
+  }
 }
 
 function showToast(message) {
@@ -132,15 +152,32 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
 }
 
+function getFocusableElements(container) {
+  return $$('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])', container)
+    .filter(element => !element.hidden && element.offsetParent !== null);
+}
+
+function setLayerTriggerState(id, isOpen) {
+  const trigger = {
+    cartDrawer: $('#cartToggle'),
+    profileModal: $('#profileToggle'),
+    mobileMenu: $('#menuToggle')
+  }[id];
+  if (trigger) trigger.setAttribute('aria-expanded', String(isOpen));
+}
+
 function openLayer(id) {
   if (activeLayer && activeLayer.id !== id) closeLayer(activeLayer.id, false);
   const el = document.getElementById(id);
   if (!el) return;
+  previouslyFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   el.classList.add('open');
   el.setAttribute('aria-hidden', 'false');
+  setLayerTriggerState(id, true);
   overlay.classList.add('open');
   document.body.classList.add('no-scroll');
   activeLayer = el;
+  window.setTimeout(() => getFocusableElements(el)[0]?.focus(), 0);
 }
 
 function closeLayer(id, restoreBody = true) {
@@ -148,10 +185,13 @@ function closeLayer(id, restoreBody = true) {
   if (!el) return;
   el.classList.remove('open');
   el.setAttribute('aria-hidden', 'true');
+  setLayerTriggerState(id, false);
   if (activeLayer === el) activeLayer = null;
   if (restoreBody) {
     overlay.classList.remove('open');
     document.body.classList.remove('no-scroll');
+    previouslyFocusedElement?.focus();
+    previouslyFocusedElement = null;
   }
 }
 
@@ -199,10 +239,7 @@ function cartQuantity() {
 }
 
 function cartSubtotal() {
-  return state.cart.reduce((sum, item) => {
-    const product = products.find(p => p.id === item.id);
-    return sum + (product ? product.price * item.qty : 0);
-  }, 0);
+  return calculateCartTotals(state.cart, products, state.promo).subtotal;
 }
 
 function updateCartUI() {
@@ -232,10 +269,9 @@ function updateCartUI() {
   $('#cartFooter').hidden = quantity === 0;
   $('#cartSubtotal').textContent = rupees.format(subtotal);
 
-  const threshold = 4999;
-  const progress = Math.min(100, (subtotal / threshold) * 100);
+  const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
   $('#shippingProgress').style.width = `${progress}%`;
-  $('#shippingMessage').textContent = subtotal >= threshold ? 'Unlocked' : `${rupees.format(threshold - subtotal)} away`;
+  $('#shippingMessage').textContent = subtotal >= FREE_SHIPPING_THRESHOLD ? 'Unlocked' : `${rupees.format(FREE_SHIPPING_THRESHOLD - subtotal)} away`;
 
   updateCheckoutSummary();
   updateProfileUI();
@@ -243,17 +279,25 @@ function updateCartUI() {
 }
 
 function addToCart(id, qty = 1) {
+  const product = products.find(item => item.id === id);
+  if (!product) return;
   const existing = state.cart.find(item => item.id === id);
-  if (existing) existing.qty += qty;
-  else state.cart.push({ id, qty });
+  if (existing) {
+    const nextQuantity = Math.min(MAX_ITEM_QUANTITY, existing.qty + qty);
+    if (nextQuantity === existing.qty) {
+      showToast(`You can add up to ${MAX_ITEM_QUANTITY} of each piece in this demo.`);
+      return;
+    }
+    existing.qty = nextQuantity;
+  } else state.cart.push({ id, qty: Math.min(MAX_ITEM_QUANTITY, Math.max(1, qty)) });
   updateCartUI();
-  showToast(`${products.find(p => p.id === id).name} added to your bag`);
+  showToast(`${product.name} added to your bag`);
 }
 
 function changeQty(id, delta) {
   const item = state.cart.find(i => i.id === id);
   if (!item) return;
-  item.qty += delta;
+  item.qty = Math.min(MAX_ITEM_QUANTITY, item.qty + delta);
   if (item.qty <= 0) state.cart = state.cart.filter(i => i.id !== id);
   updateCartUI();
 }
@@ -305,10 +349,7 @@ function updateCheckoutSummary() {
     return product ? `<div class="checkout-summary-item"><img src="${product.image}" alt="${product.name}" /><div><strong>${product.name}</strong><br /><span>Qty ${item.qty}</span></div><strong>${rupees.format(product.price * item.qty)}</strong></div>` : '';
   }).join('');
 
-  const subtotal = cartSubtotal();
-  const shipping = subtotal >= 4999 || subtotal === 0 ? 0 : 199;
-  const discount = Math.round(subtotal * state.promo);
-  const total = subtotal + shipping - discount;
+  const { subtotal, shipping, discount, total } = calculateCartTotals(state.cart, products, state.promo);
   $('#checkoutSubtotal').textContent = rupees.format(subtotal);
   $('#checkoutShipping').textContent = shipping ? rupees.format(shipping) : 'Free';
   $('#discountLine').hidden = discount === 0;
@@ -324,15 +365,15 @@ function setCheckoutStep(step) {
 
 function validateDeliveryForm() {
   const form = $('#deliveryForm');
-  const required = [...form.querySelectorAll('[required]')];
-  let valid = true;
-  required.forEach(input => {
-    if (!input.value.trim()) {
-      input.style.borderColor = '#b42318';
-      valid = false;
-    } else input.style.borderColor = '';
+  const delivery = Object.fromEntries(new FormData(form).entries());
+  const valid = form.checkValidity() && isValidDelivery(delivery);
+  [...form.querySelectorAll('[required]')].forEach(input => {
+    input.style.borderColor = input.checkValidity() && input.value.trim() ? '' : '#b42318';
   });
-  if (!valid) showToast('Please complete the delivery details');
+  if (!valid) {
+    form.reportValidity();
+    showToast('Please enter valid delivery details.');
+  }
   return valid;
 }
 
@@ -340,23 +381,31 @@ function selectedPayment() {
   return $('input[name="payment"]:checked')?.value || 'upi';
 }
 
+function renderConfirmation(order) {
+  const summary = $('#confirmationSummary');
+  const itemCount = order.items.reduce((sum, item) => sum + item.qty, 0);
+  const amount = document.createElement('strong');
+  amount.textContent = rupees.format(order.total);
+  summary.replaceChildren(
+    amount,
+    document.createTextNode(` • ${itemCount} item(s)`),
+    document.createElement('br'),
+    document.createTextNode('Delivery details are shown only for this demo and are not saved with the order.'),
+    document.createElement('br'),
+    document.createTextNode(`Payment: ${order.payment.toUpperCase()}`)
+  );
+}
+
 function placeOrder() {
   if (!state.cart.length) {
     showToast('Your bag is empty');
     return;
   }
+  if (!validateDeliveryForm()) return;
 
   const payment = selectedPayment();
-  if (payment === 'upi' && $('#upiId').value && !$('#upiId').value.includes('@')) {
-    showToast('Please enter a valid UPI ID');
-    return;
-  }
-
   const formData = Object.fromEntries(new FormData($('#deliveryForm')).entries());
-  const subtotal = cartSubtotal();
-  const shipping = subtotal >= 4999 ? 0 : 199;
-  const discount = Math.round(subtotal * state.promo);
-  const total = subtotal + shipping - discount;
+  const { total } = calculateCartTotals(state.cart, products, state.promo);
   const orderId = `MRY${Date.now().toString().slice(-8)}`;
   const order = {
     id: orderId,
@@ -364,11 +413,11 @@ function placeOrder() {
     status: 'Order confirmed',
     payment,
     total,
-    address: formData,
     items: state.cart.map(item => ({ ...item }))
   };
 
   state.orders.unshift(order);
+  state.orders = normalizeOrders(state.orders, productIds);
   if (formData.save && state.profile) {
     state.profile.address = {
       address: formData.address,
@@ -379,7 +428,7 @@ function placeOrder() {
   }
 
   $('#confirmationOrderId').textContent = orderId;
-  $('#confirmationSummary').innerHTML = `<strong>${rupees.format(total)}</strong> Â· ${order.items.reduce((sum, item) => sum + item.qty, 0)} item(s)<br />${formData.address}, ${formData.city} ${formData.pincode}<br />Payment: ${payment.toUpperCase()}`;
+  renderConfirmation(order);
 
   state.cart = [];
   state.promo = 0;
@@ -408,9 +457,9 @@ function updateProfileUI() {
 
   $('#profileOrders').innerHTML = state.orders.length ? state.orders.map(order => `
     <div class="order-card">
-      <div class="order-card-head"><strong>${order.id}</strong><span>${order.status}</span></div>
-      <p>${order.date} Â· ${order.items.reduce((sum, item) => sum + item.qty, 0)} item(s)</p>
-      <p>${rupees.format(order.total)} Â· ${order.payment.toUpperCase()}</p>
+      <div class="order-card-head"><strong>${escapeHtml(order.id)}</strong><span>${escapeHtml(order.status)}</span></div>
+      <p>${escapeHtml(order.date)} Â· ${order.items.reduce((sum, item) => sum + item.qty, 0)} item(s)</p>
+      <p>${rupees.format(order.total)} Â· ${escapeHtml(order.payment.toUpperCase())}</p>
     </div>
   `).join('') : '<p class="checkout-note">No orders yet. Your future favourites will appear here.</p>';
 
@@ -425,6 +474,32 @@ function updateProfileUI() {
       if (form.elements[key]) form.elements[key].value = value;
     });
   }
+}
+
+function clearDemoData() {
+  const confirmed = window.confirm('Clear your locally saved bag, wishlist, profile and demo orders from this browser?');
+  if (!confirmed) return;
+
+  state.cart = [];
+  state.wishlist = new Set();
+  state.profile = null;
+  state.orders = [];
+  state.promo = 0;
+  state.selectedProduct = null;
+
+  let storageCleared = true;
+  try {
+    ['morio-cart', 'morio-wishlist', 'morio-profile', 'morio-orders'].forEach(key => localStorage.removeItem(key));
+  } catch {
+    storageCleared = false;
+  }
+
+  $('#deliveryForm').reset();
+  $('#promoCode').value = '';
+  $('#promoMessage').textContent = '';
+  updateCartUI();
+  renderProducts();
+  showToast(storageCleared ? 'Demo data cleared from this browser.' : 'Demo data was cleared for this visit, but could not be removed from browser storage.');
 }
 
 function openInfo(type) {
@@ -447,7 +522,7 @@ function openInfo(type) {
     contact: {
       eyebrow: 'We are here',
       title: 'Contact Morio',
-      body: '<p>Email: hello@morio.in</p><p>Location: Bengaluru, Karnataka<br />Private appointments by request.</p><p>Replace the sample email and add WhatsApp, phone and studio details before launch.</p>'
+      body: '<p>This portfolio demo has no live contact channel.</p><p>Before launch, publish an approved business email, WhatsApp or phone number, studio details and customer-support policy.</p>'
     }
   }[type];
   if (!content) return;
@@ -532,6 +607,19 @@ document.addEventListener('keydown', event => {
   if (event.key === 'Escape') {
     closeActiveLayer();
     $('#searchBar').classList.remove('open');
+  }
+  if (event.key === 'Tab' && activeLayer) {
+    const focusable = getFocusableElements(activeLayer);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   }
   if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-open-product]')) {
     event.preventDefault();
@@ -620,10 +708,15 @@ $('#applyPromo').addEventListener('click', () => {
 $('#loginForm').addEventListener('submit', event => {
   event.preventDefault();
   const data = Object.fromEntries(new FormData(event.currentTarget).entries());
-  state.profile = { name: data.name, email: data.email };
+  const profile = normalizeProfile(data);
+  if (!profile) {
+    showToast('Please enter a valid name and email address.');
+    return;
+  }
+  state.profile = profile;
   saveState();
   updateProfileUI();
-  showToast(`Welcome, ${data.name.split(' ')[0]}`);
+  showToast(`Welcome, ${profile.name.split(' ')[0]}`);
 });
 
 $('#logoutButton').addEventListener('click', () => {
@@ -632,6 +725,8 @@ $('#logoutButton').addEventListener('click', () => {
   updateProfileUI();
   showToast('Signed out');
 });
+
+$('#clearDemoData').addEventListener('click', clearDemoData);
 
 $$('[data-profile-tab]').forEach(tab => tab.addEventListener('click', () => {
   $$('[data-profile-tab]').forEach(t => t.classList.toggle('active', t === tab));
@@ -648,8 +743,7 @@ $('#addressForm').addEventListener('submit', event => {
 
 $('#newsletterForm').addEventListener('submit', event => {
   event.preventDefault();
-  const email = $('#newsletterEmail').value.trim();
-  showToast(`You are on the list${email ? `, ${email}` : ''}`);
+  showToast('Thanks — you are on the demo list.');
   event.currentTarget.reset();
 });
 

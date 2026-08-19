@@ -33,14 +33,14 @@
       <button class="icon-button" id="searchToggle" aria-label="Search products" title="Search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.6-3.6"></path></svg>
       </button>
-      <button class="icon-button" id="profileToggle" aria-label="Open customer profile" title="Profile">
+      <button class="icon-button" id="profileToggle" aria-label="Open customer profile" aria-controls="profileModal" aria-expanded="false" title="Profile">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4.8 21c.8-4.1 3.2-6.2 7.2-6.2s6.4 2.1 7.2 6.2"></path></svg>
       </button>
-      <button class="icon-button bag-button" id="cartToggle" aria-label="Open shopping bag" title="Bag">
+      <button class="icon-button bag-button" id="cartToggle" aria-label="Open shopping bag" aria-controls="cartDrawer" aria-expanded="false" title="Bag">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 13H6L5 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
         <span class="count-badge" id="cartCount">0</span>
       </button>
-      <button class="menu-button" id="menuToggle" aria-label="Open menu"><span></span><span></span></button>
+      <button class="menu-button" id="menuToggle" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false"><span></span><span></span></button>
     </div>
   </header>
 
@@ -170,7 +170,7 @@
       <div class="service-card reveal">
         <span class="service-number">01</span>
         <div><h3>Private styling</h3><p>Book a virtual or Bengaluru appointment for draping, pairing and gifting guidance.</p></div>
-        <a href="mailto:hello@morio.in?subject=Morio%20styling%20appointment">Book a session â†—</a>
+        <a href="#newsletter">Join the launch list â†—</a>
       </div>
       <div class="service-card reveal">
         <span class="service-number">02</span>
@@ -233,7 +233,7 @@
     <div class="footer-links">
       <div><h3>Shop</h3><a href="#new">New arrivals</a><a href="#collections">Sarees</a><a href="#collections">Jewellery & more</a><a href="#new">Gift cards</a></div>
       <div><h3>Care</h3><a href="#story">About Morio</a><button data-footer-action="shipping">Shipping & returns</button><button data-footer-action="care">Saree care</button><button data-footer-action="contact">Contact us</button></div>
-      <div><h3>Visit</h3><p>Bengaluru, Karnataka</p><p>Appointments by request</p><a href="mailto:hello@morio.in">hello@morio.in</a></div>
+      <div><h3>Visit</h3><p>Bengaluru, Karnataka</p><p>Appointments by request</p><p>Contact details available at launch</p></div>
       <div><h3>Follow</h3><a href="#top">Instagram</a><a href="#top">Pinterest</a><a href="#top">WhatsApp</a></div>
     </div>
     <div class="footer-bottom"><span>Â© 2026 Morio. All rights reserved.</span><span>Privacy Â· Terms Â· Accessibility</span><span>Made with care in Bengaluru.</span></div>
@@ -241,14 +241,14 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <aside class="drawer mobile-menu" id="mobileMenu" aria-hidden="true">
-    <div class="drawer-head"><span>Menu</span><button data-close="mobileMenu">Ã—</button></div>
+  <aside class="drawer mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="mobileMenuTitle">
+    <div class="drawer-head"><span id="mobileMenuTitle">Menu</span><button data-close="mobileMenu" aria-label="Close menu">Ã—</button></div>
     <nav><a href="#new">New arrivals</a><a href="#collections">Collections</a><a href="#story">Our story</a><a href="#journal">Journal</a></nav>
-    <div class="mobile-menu-foot"><p>Bengaluru-born. Made for everywhere.</p><a href="mailto:hello@morio.in">hello@morio.in</a></div>
+    <div class="mobile-menu-foot"><p>Bengaluru-born. Made for everywhere.</p><a href="#newsletter">Join the launch list</a></div>
   </aside>
 
-  <aside class="drawer cart-drawer" id="cartDrawer" aria-hidden="true">
-    <div class="drawer-head"><div><span>Your bag</span><small id="cartItemLabel">0 items</small></div><button data-close="cartDrawer">Ã—</button></div>
+  <aside class="drawer cart-drawer" id="cartDrawer" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle">
+    <div class="drawer-head"><div><span id="cartDrawerTitle">Your bag</span><small id="cartItemLabel">0 items</small></div><button data-close="cartDrawer" aria-label="Close shopping bag">Ã—</button></div>
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-empty" id="cartEmpty">
       <span class="empty-icon">MÅŒ</span>
@@ -291,12 +291,12 @@
         <p class="checkout-note">India-wide delivery. Bengaluru orders can select priority dispatch.</p>
         <form id="deliveryForm" class="form-grid">
           <label>Full name<input name="name" required placeholder="Your full name" /></label>
-          <label>Mobile number<input name="phone" required inputmode="tel" placeholder="10-digit mobile number" /></label>
-          <label class="full">Email address<input name="email" required type="email" placeholder="you@example.com" /></label>
-          <label class="full">Address<input name="address" required placeholder="House / flat, street, locality" /></label>
-          <label>City<input name="city" required value="Bengaluru" /></label>
-          <label>PIN code<input name="pincode" required inputmode="numeric" placeholder="560001" /></label>
-          <label>State<input name="state" required value="Karnataka" /></label>
+          <label>Mobile number<input name="phone" required inputmode="tel" autocomplete="tel" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" /></label>
+          <label class="full">Email address<input name="email" required type="email" autocomplete="email" placeholder="you@example.com" /></label>
+          <label class="full">Address<input name="address" required autocomplete="street-address" maxlength="160" placeholder="House / flat, street, locality" /></label>
+          <label>City<input name="city" required autocomplete="address-level2" maxlength="60" value="Bengaluru" /></label>
+          <label>PIN code<input name="pincode" required inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{6}" maxlength="6" placeholder="560001" /></label>
+          <label>State<input name="state" required autocomplete="address-level1" maxlength="60" value="Karnataka" /></label>
           <label>Address type<select name="type"><option>Home</option><option>Work</option><option>Other</option></select></label>
           <label class="checkbox-label full"><input type="checkbox" name="save" /> Save this address to my profile</label>
         </form>
@@ -307,20 +307,20 @@
         <h2>Choose a payment method</h2>
         <div class="payment-options">
           <label class="payment-option active"><input type="radio" name="payment" value="upi" checked /><span class="payment-icon">UPI</span><div><strong>UPI</strong><small>Google Pay, PhonePe, Paytm or any UPI app</small></div><b>âœ“</b></label>
-          <div class="payment-panel active" data-payment-panel="upi"><label>UPI ID<input id="upiId" placeholder="name@bank" /></label><p>For a live store, this button connects to Razorpay or Cashfree.</p></div>
+          <div class="payment-panel active" data-payment-panel="upi"><p><strong>Portfolio demo:</strong> UPI details are intentionally not collected here. A live store would open a trusted payment provider such as Razorpay or Cashfree.</p></div>
 
           <label class="payment-option"><input type="radio" name="payment" value="card" /><span class="payment-icon">â–£</span><div><strong>Credit / debit card</strong><small>Visa, Mastercard, RuPay and Amex</small></div><b>âœ“</b></label>
-          <div class="payment-panel" data-payment-panel="card"><label>Card number<input inputmode="numeric" placeholder="1234 5678 9012 3456" /></label><div class="two-col"><label>Expiry<input placeholder="MM/YY" /></label><label>CVV<input inputmode="numeric" placeholder="123" /></label></div></div>
+          <div class="payment-panel" data-payment-panel="card"><p><strong>Portfolio demo:</strong> Card details are intentionally not collected. Production checkout must use a PCI-compliant payment provider.</p></div>
 
           <label class="payment-option"><input type="radio" name="payment" value="wallet" /><span class="payment-icon">â—«</span><div><strong>Wallets & net banking</strong><small>Popular wallets and 50+ Indian banks</small></div><b>âœ“</b></label>
-          <div class="payment-panel" data-payment-panel="wallet"><p>Select your wallet or bank securely after placing the order.</p></div>
+          <div class="payment-panel" data-payment-panel="wallet"><p><strong>Portfolio demo:</strong> Wallet and bank credentials are never requested or stored here.</p></div>
 
           <label class="payment-option"><input type="radio" name="payment" value="cod" /><span class="payment-icon">â‚¹</span><div><strong>Cash on delivery</strong><small>Available on eligible PIN codes</small></div><b>âœ“</b></label>
-          <div class="payment-panel" data-payment-panel="cod"><p>A â‚¹99 COD handling fee may apply in a live checkout.</p></div>
+          <div class="payment-panel" data-payment-panel="cod"><p>This demo shows the cash-on-delivery option only. Eligibility and handling fees need a production backend.</p></div>
         </div>
         <label class="checkbox-label"><input type="checkbox" id="billingSame" checked /> Billing address is the same as delivery address</label>
         <div class="checkout-nav"><button class="text-link" data-back="1">â† Back</button><button class="button button-dark" id="placeOrder">Pay & place order</button></div>
-        <p class="demo-disclaimer">Demo checkout only â€” no real payment is processed in this prototype.</p>
+        <p class="demo-disclaimer">Demo checkout only — no payment details are collected, and delivery details are not saved with demo orders.</p>
       </div>
 
       <div class="checkout-step confirmation-step" data-step="3">
@@ -362,6 +362,7 @@
           <button class="button button-dark" type="submit">Continue</button>
         </form>
         <p class="profile-fineprint">This prototype stores account details only in your browser.</p>
+        <button class="clear-demo-data" id="clearDemoData" type="button">Clear saved demo data</button>
       </div>
       <div id="accountView" hidden>
         <div class="account-head"><div><p class="eyebrow">My account</p><h2 id="accountName"></h2><span id="accountEmail"></span></div><button id="logoutButton">Sign out</button></div>
@@ -388,7 +389,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
 
